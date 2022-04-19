@@ -4,8 +4,13 @@ export const actions = {
     logeado : "LOGEADO",
     agregarCarritoDulce: "CARRITO_DULCE",
     agregarCarritoPeli: "CARRITO_MOVIES",
-    usuarios: 'TODOS_USUARIOS'
+    usuarios: 'TODOS_USUARIOS',
+    setLoader: 'SET_LOADER'
 }
+export const setLoader = loader => ({
+    type: actions.setLoader,
+    payload: loader
+})
 
 export const logeado = (usuario) => ({
     type: actions.logeado,
@@ -29,16 +34,20 @@ export const agregarCarritoPeli = (id) => ({
 
 export const logueadoThunk = (id) => {
     return (dispatch) => {
+        dispatch(setLoader(true))
         return axios
           .get(`https://uvk-api.herokuapp.com/uvk/userempleado/${id}`)
-          .then((res) => dispatch(logeado(res.data)));
+          .then((res) => dispatch(logeado(res.data)))
+          .finally(()=>dispatch(setLoader(false)));
       };
 }
 
 export const getUsuariosThunk = () => {
     return (dispatch) => {
+        dispatch(setLoader(true))
         return axios
           .get(`https://uvk-api.herokuapp.com/uvk/userempleado/`)
-          .then((res) => dispatch(getUsuarios(res.data)));
+          .then((res) => dispatch(getUsuarios(res.data)))
+          .finally(()=>dispatch(setLoader(false)));
       };
 }

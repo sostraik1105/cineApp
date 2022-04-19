@@ -10,12 +10,17 @@ import { DetallePeli } from "./components/pages/movies/DetallePeli";
 import { DashBoard } from "./components/pages/admin/DashBoard";
 import { PeliculasAdmin } from "./components/pages/admin/Peliculas/PeliculasAdmin";
 import { SedesAdmin } from "./components/pages/admin/Sedes/SedesAdmin";
+import { useSelector } from "react-redux";
+import { LoadingScreen } from "./components/generals/LoadingScreen";
 
 function App() {
+  const loader = useSelector(state => state.loader)
   return (
     <HashRouter>
       <div className="App">
         <Navbar />
+        
+        {loader && <LoadingScreen />}
 
         <Routes>
           <Route index element={<Home />} />
